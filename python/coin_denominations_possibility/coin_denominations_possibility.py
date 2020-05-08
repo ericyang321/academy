@@ -7,13 +7,6 @@
 # the three possible patterns of solving a recursive problem
 # 1. the naive terrible recursive way:
 def coins_recursive(amount, denominations, current_index=0):
-
-    # func: find combinations of coins that will total to amount
-    # we need to break this down to sub problem.
-    # sub problem is: how many ways to get remaining amount from remaining denominations
-        # aka how many ways to get smaller amount from a smaller segment of denominations
-
-
     # 0 means we found a viable combination
     if amount == 0:
         return 1
