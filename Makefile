@@ -9,3 +9,9 @@ pyrun:
 
 pyconsole:
 	python -i python/index.py
+
+cbuild:
+	clang -Wall -o ./bin/index ./c/index.c -lm
+
+crun:
+	make cbuild && ./bin/index
