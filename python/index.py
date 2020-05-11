@@ -41,17 +41,3 @@
 
 
 # print(brute_max_duffle_bag_value(30, [(7, 160), (3, 90), (2, 15)]))
-
-# choosing a subset
-# given N things, how many different ways are there to choose K of them?
-# given 8 people, how many ways are there to group 3 of them to go to the movies? (without repeating)
-
-def ways_to_group(k, n):
-    """
-    function is trying to find how many ways are there is to group a limit of k things
-    given a total count of n things
-
-    for example
-    """
-
-
