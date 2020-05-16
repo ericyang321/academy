@@ -11,7 +11,13 @@ pyconsole:
 	python -i python/index.py
 
 cbuild:
-	clang -Wall -o ./bin/index ./c/index.c -lm
+	clang -Wall ./c/index.c -o ./bin/indexc -lm
 
 crun:
-	make cbuild && ./bin/index
+	make cbuild && ./bin/indexc
+
+cppbuild:
+	g++ ./cpp/index.cpp -o ./bin/indexcpp -lm -std=c++17
+
+cpprun:
+	make cppbuild && ./bin/indexcpp

@@ -3,7 +3,6 @@
 # given N things, how many different ways are there to choose K of them?
 # given 8 people, how many ways are there to group 3 of them to go to the movies? (without repeating)
 
-
 def ways_to_group(k, n):
     """
     function is trying to find how many ways are there is to group a limit of k things
