@@ -1,91 +1,64 @@
-# given a dollar amount and a list of coin denominations [1, 2, 3], find the possible ways to combine denominations to get to dollar amount
-# (4, [1, 2, 3]) returns 4
-# 4 as in [1, 1, 1, 1], [1, 1, 2], [1, 3], [2, 2]
+# Your quirky boss collects rare, old coins...
+#
+# They found out you're a programmer and asked you to solve something they've been wondering for a long time.
+#
+# Write a function that, given:
+#
+# an amount of money
+# a list of coin denominations
+# computes the number of ways to make the amount of money with coins of the available denominations.
+#
+# for example: (4, [1, 2, 3, 4])
+# 1¢, 1¢, 1¢, 1¢
+# 1¢, 1¢, 2¢
+# 1¢, 3¢
+# 2¢, 2¢
 
-# http://www.pythontutor.com/visualize.html#mode=edit
 
-# the three possible patterns of solving a recursive problem
-# 1. the naive terrible recursive way:
-def coins_recursive(amount, denominations, current_index=0):
-    # 0 means we found a viable combination
+def solve(amount, denominations):
+    # return _solve_brute(amount, denominations, 0)
+    return _solve_cache(amount, denominations, 0, {})
+
+
+def _solve_brute(amount, denominations, idx):
+    # base case: overshot
+    if amount < 0:
+        return 0
+    # base case: found the correct answer
     if amount == 0:
         return 1
-    # < 0 means we did not find a viable combination
-    elif amount < 0:
+
+    accumulator = 0
+    for i in range(idx, len(denominations)):
+        deno = denominations[i]
+
+        accumulator += _solve_brute(amount - deno, denominations, i)
+
+    return accumulator
+
+
+def _solve_cache(amount, denominations, idx, cache):
+    # base case: overshot
+    if amount < 0:
         return 0
-    # no more denominations
-    elif current_index == len(denominations):
-        return 0
+    # base case: found the correct answer
+    if amount == 0:
+        return 1
 
-    print(
-        "checking ways to make {} with {}".format(
-            amount, denominations[current_index:],
-        )
-    )
+    accumulator = 0
+    for i in range(idx, len(denominations)):
+        deno = denominations[i]
 
-    current_coin = denominations[current_index]
+        key = str((amount, i))
 
-    combinations_count = 0
-    while amount >= 0:
-        combinations_count += coins_recursive(amount, denominations, current_index + 1)
+        if key in cache:
+            accumulator += cache[key]
+        else:
+            perm = _solve_cache(amount - deno, denominations, i, cache)
+            accumulator += perm
+            cache[key] = perm
 
-        amount -= current_coin
-
-    return combinations_count
-
-
-# 2: recursion, but with caching of calculations we've done already
-# we should cache at checking for "checking ways to make amount with denominations"
-# thats right before the checker dives into a separate tree of possibilities. cut
-# that off with a result early with caching
-class CachedCoin(object):
-    def __init__(self):
-        self.cache = {}
-
-    def possibilities(self, amount, denominations, current_index=0):
-        cache_key = str((amount, current_index))
-        if cache_key in self.cache:
-            print("cache hit: {}".format(cache_key))
-            return self.cache[cache_key]
-
-        if amount == 0:
-            return 1
-        if amount < 0:
-            return 0
-        if current_index == len(denominations):
-            return 0
-
-        print(
-            "checking ways to make {} with {}".format(
-                amount, denominations[current_index:],
-            )
-        )
-
-        current_coin = denominations[current_index]
-
-        combinations_count = 0
-        while amount >= 0:
-            combinations_count += self.possibilities(
-                amount, denominations, current_index + 1
-            )
-
-            amount -= current_coin
-
-        # cache result once computed:
-        self.cache[cache_key] = combinations_count
-        return combinations_count
+    return accumulator
 
 
-# 3: iterative, bottoms up approach that saves space and time but might not be available to all problems
-def coins_bottom_up(amount, denominations):
-    ways_of_doing_n_cents = [0] * (amount + 1)
-    ways_of_doing_n_cents[0] = 1
-
-    for coin in denominations:
-        for higher_amount in range(coin, amount + 1):
-            higher_amount_remainder = higher_amount - coin
-            ways_of_doing_n_cents[higher_amount] += ways_of_doing_n_cents[
-                higher_amount_remainder
-            ]
-
-    return ways_of_doing_n_cents[amount]
+print(solve(900, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
