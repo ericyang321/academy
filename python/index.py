@@ -32,7 +32,8 @@
 
 def max_cake_money(bag_size, cakes):
     # return _solve_brute(bag_size, cakes, 0, 0)
-    return _solve_cache(bag_size, cakes, 0, 0, {})
+    # return _solve_cache(bag_size, cakes, 0, 0, {})
+    return _solve_optimized(bag_size, cakes)
 
 
 def _solve_brute(bag_size, cakes, current_monetary_value, idx):
@@ -94,4 +95,22 @@ def _solve_cache(bag_size, cakes, current_monetary_value, idx, cache):
     return max(weights)
 
 
-max_cake_money(950, [(1, 1), (2, 2), (3, 3)])
+def _solve_optimized(bag_size, cakes):
+    # you have cakes of weights 1 -> infinite
+
+    # imagine if you had a bag size of only 1
+    # for something this small, we only care to look at cakes the weight of 1
+    # and we would iterate through all cakes and save the maximum value of a cake that has a weight of 1.
+
+    # imagine then, you had a bag size of 2
+    # if we pick a cake of weight 2, we would fill up our entire bag.
+    # we just need to check if picking a cake size of 2 would be better money than if we picked
+    # another cake of weight 1.
+    # but we have to account for cakes the weight of 1.
+    # we could pick up a cake weight 1, but we would still have more space in the bag.
+    # the best way to fill up that extra space is to check if adding another cake of weight 1 has a higher price
+    # than the current max price of filling up a cake size 2.
+    None
+
+
+_solve_optimized(3, [(1, 1), (2, 2), (3, 3)])
