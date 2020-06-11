@@ -16,6 +16,11 @@ def diff_bits_count(bin_num_one, bin_num_two):
     to_shift = max_bits()
     count = 0
 
+    # from 0 -> maximum number of bit positions
+    # shift checked bit position to 2^0 digit and & 1
+    # if the number is 0, & will return 0. if the number is 1, & will return 1
+    # check if both numbers return the same AND comparisons to determine if
+    # they're the same bits
     for shift_count in range(0, to_shift):
         bin_num_one_shift_and = (bin_num_one >> shift_count) & 1
         bin_num_two_shift_and = (bin_num_two >> shift_count) & 1
