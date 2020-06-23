@@ -1,24 +1,25 @@
 class MinHeap(object):
     NOT_FOUND = -1
 
-    def __init__(self, heap=None):
-        self.heap = self.heapify(heap)
+    def __init__(self, potential_heap=None):
+        self.heap = potential_heap
+        if not isinstance(self.heap, list):
+            raise TypeError(f"Needs to be a list, instead found {repr(self.heap)}")
 
-    @classmethod
-    def heapify(cls, potential_heap):
-        if not isinstance(potential_heap, list):
-            raise TypeError(f"Needs to be a list, instead found {repr(potential_heap)}")
-
-        return potential_heap
-
-    def bubble_down(self, idx):
-        return self.__bubble_down(idx)
+        for idx in range(len(self.heap) - 1, -1, -1):
+            self.__bubble_down(idx)
 
     def pop(self):
-        None
+        smallest = self.heap[0]
+        self.__swap(0, self.__last_idx())
+        self.heap.pop()
+        self.__bubble_down(0)
+
+        return smallest
 
     def push(self, num):
-        None
+        self.heap.append(num)
+        self.__bubble_up(self.__last_idx())
 
     def empty(self):
         return len(self.heap) == 0
@@ -29,15 +30,15 @@ class MinHeap(object):
 
         left_child_idx = self.__left_child_position(idx)
         right_child_idx = self.__right_child_position(idx)
-        while left_child_idx >= 0 or right_child_idx >= 0:
+        while left_child_idx != -1 or right_child_idx != -1:
             n = self.heap[idx]
             # left and right children both exist
-            if left_child_idx >= 0 and right_child_idx >= 0:
+            if left_child_idx != -1 and right_child_idx != -1:
                 left_child = self.heap[left_child_idx]
                 right_child = self.heap[right_child_idx]
 
                 # both children are larger than you. you're at the right place
-                if right_child >= n and left_child >= n:
+                if right_child > n and left_child > n:
                     break
 
                 # one of the children is larger than you. pick the smaller one
@@ -51,11 +52,13 @@ class MinHeap(object):
                 elif right_child < left_child:
                     idx_to_swap = right_child_idx
             # only left child exists and is smaller
-            elif left_child_idx >= 0 and self.heap[left_child_idx] < n:
+            elif left_child_idx != -1 and self.heap[left_child_idx] < n:
                 idx_to_swap = left_child_idx
             # only right child exists and is smaller
-            elif right_child_idx >= 0 and self.heap[right_child_idx] < n:
+            elif right_child_idx != -1 and self.heap[right_child_idx] < n:
                 idx_to_swap = right_child_idx
+            else:
+                break
 
             self.__swap(idx, idx_to_swap)
 
@@ -70,7 +73,7 @@ class MinHeap(object):
             return self.NOT_FOUND
 
         parent_idx = self.__parent_position(idx)
-        while parent_idx >= 0:
+        while parent_idx != -1:
             if self.heap[idx] < self.heap[parent_idx]:
                 self.__swap(idx, parent_idx)
                 idx = parent_idx
@@ -85,22 +88,22 @@ class MinHeap(object):
             return self.NOT_FOUND
 
         pos = (idx - 1) // 2
-        if self.__out_of_bounds(idx):
+        if self.__out_of_bounds(pos):
             return self.NOT_FOUND
 
         return pos
 
     def __right_child_position(self, idx):
         pos = (idx * 2) + 2
-        if self.__out_of_bounds(idx):
+        if self.__out_of_bounds(pos):
             return self.NOT_FOUND
 
         return pos
 
     def __left_child_position(self, idx):
         pos = (idx * 2) + 1
-        if self.__out_of_bounds(idx):
-            return NOT_FOUND
+        if self.__out_of_bounds(pos):
+            return self.NOT_FOUND
 
         return pos
 
@@ -124,5 +127,5 @@ class MinHeap(object):
         self.heap[idx1] = self.heap[idx2]
         self.heap[idx2] = temp
 
-
-print(MinHeap([5, 1, 2, 3, 4, 6]).bubble_up(1))
+    def __last_idx(self):
+        return len(self.heap) - 1
