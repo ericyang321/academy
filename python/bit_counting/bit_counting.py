@@ -10,7 +10,7 @@ def max_bits():
 
     raise TypeError("Architecture besides 64 and 32 are not supported")
 
-
+# using loop to iterate over all possible existing bits
 def diff_bits_count(bin_num_one, bin_num_two):
     # write a function to count the number of bits that are different between two numbers
     to_shift = max_bits()
@@ -27,5 +27,15 @@ def diff_bits_count(bin_num_one, bin_num_two):
 
         if bin_num_one_shift_and != bin_num_two_shift_and:
             count += 1
+
+    return count
+
+# brian kernighan's way to count bits
+def brians_way(bin_num):
+    # write a function to count the number of set bits (1s) in a number
+    count = 0
+    while bin_num > 0:
+        count += (bin_num & 1)
+        bin_num = bin_num >> 1
 
     return count
