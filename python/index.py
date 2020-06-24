@@ -9,6 +9,16 @@ class MinHeap(object):
         for idx in range(len(self.heap) - 1, -1, -1):
             self.__bubble_down(idx)
 
+    @classmethod
+    def sort(cls, unsorted_list):
+        sorted_list = []
+        min_heap = cls(unsorted_list)
+        while not min_heap.empty():
+            smallest_item = min_heap.pop()
+            sorted_list.append(smallest_item)
+
+        return sorted_list
+
     def pop(self):
         smallest = self.heap[0]
         self.__swap(0, self.__last_idx())
@@ -17,12 +27,24 @@ class MinHeap(object):
 
         return smallest
 
+    def peek(self):
+        return self.heap[0]
+
     def push(self, num):
         self.heap.append(num)
         self.__bubble_up(self.__last_idx())
 
+    def bubble_down(self, idx):
+        return self.__bubble_down(idx)
+
     def empty(self):
-        return len(self.heap) == 0
+        return self.size() == 0
+
+    def size(self):
+        return len(self.heap)
+
+    def count(self):
+        return self.size()
 
     def __bubble_down(self, idx):
         if self.__out_of_bounds(idx):
@@ -38,7 +60,7 @@ class MinHeap(object):
                 right_child = self.heap[right_child_idx]
 
                 # both children are larger than you. you're at the right place
-                if right_child > n and left_child > n:
+                if right_child >= n and left_child >= n:
                     break
 
                 # one of the children is larger than you. pick the smaller one
@@ -47,9 +69,9 @@ class MinHeap(object):
                 elif right_child < n and left_child >= n:
                     idx_to_swap = right_child_idx
                 # both children are smaller than you. pick the smallest one
-                elif left_child < right_child:
+                elif left_child <= right_child:
                     idx_to_swap = left_child_idx
-                elif right_child < left_child:
+                elif right_child <= left_child:
                     idx_to_swap = right_child_idx
             # only left child exists and is smaller
             elif left_child_idx != -1 and self.heap[left_child_idx] < n:
@@ -129,3 +151,6 @@ class MinHeap(object):
 
     def __last_idx(self):
         return len(self.heap) - 1
+
+
+print(MinHeap.sort([0, 5, 8, 9, 10, 23, 4, 1, 1, 90, 82, 47]))
