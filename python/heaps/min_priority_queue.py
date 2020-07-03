@@ -8,7 +8,7 @@ class MinPriorityQueue(object):
 
         self.heap = heap
 
-    def append(self, val):
+    def push(self, val):
         heapq.heappush(self.heap, val)
         return val
 
