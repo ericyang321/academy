@@ -6,6 +6,7 @@ class MinHeap(object):
         if not isinstance(self.heap, list):
             raise TypeError(f"Needs to be a list, instead found {repr(self.heap)}")
 
+        # heapifying list, iterating backwards
         for idx in range(len(self.heap) - 1, -1, -1):
             self.__bubble_down(idx)
 
@@ -43,7 +44,12 @@ class MinHeap(object):
     def size(self):
         return len(self.heap)
 
+    # alias for size
     def count(self):
+        return self.size()
+
+    # alias for size
+    def length(self):
         return self.size()
 
     def __bubble_down(self, idx):

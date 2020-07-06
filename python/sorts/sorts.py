@@ -1,3 +1,7 @@
+from .comparators import num_comparator
+import heapq
+
+
 def swap(l, i, j):
     temp = l[i]
     l[i] = l[j]
@@ -19,11 +23,7 @@ def insertion_sort(l):
 ################# merge sort ##################
 
 
-def default_comparator(a, b):
-    return a - b
-
-
-def merge_sorted_lists(a_list, b_list, comparator=default_comparator):
+def merge_sorted_lists(a_list, b_list, comparator):
     A_LEN = len(a_list)
     B_LEN = len(b_list)
 
@@ -58,7 +58,7 @@ def merge_sorted_lists(a_list, b_list, comparator=default_comparator):
     return combined_list
 
 
-def merge_sort(sortable, comparator=default_comparator):
+def merge_sort(sortable, comparator=num_comparator):
     if len(sortable) <= 1:
         return sortable
 
@@ -71,3 +71,17 @@ def merge_sort(sortable, comparator=default_comparator):
     sorted_right_half = merge_sort(right_half, comparator)
 
     return merge_sorted_lists(sorted_left_half, sorted_right_half, comparator)
+
+
+################# heap sort ##################
+
+
+def heap_sort(sortable, comparator=num_comparator):
+    sorted_list = []
+    heapq.heapify(sortable)
+
+    while len(sortable) > 0:
+        item = heapq.heappop(sortable)
+        sorted_list.append(item)
+
+    return sorted_list
