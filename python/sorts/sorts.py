@@ -85,3 +85,50 @@ def heap_sort(sortable, comparator=num_comparator):
         sorted_list.append(item)
 
     return sorted_list
+
+
+################# quick sort ##################
+
+
+def qs_partition_array(sortable, start_idx, end_idx):
+    pivot_idx = end_idx
+    pivot_val = sortable[pivot_idx]
+    left_idx = start_idx
+    right_idx = end_idx
+
+    while left_idx <= right_idx:
+        # walk left idx pointer to the right until a larger-than-pivot
+        # value found
+        while left_idx <= right_idx and sortable[left_idx] <= pivot_val:
+            left_idx += 1
+
+        # walk right idx pointer to the left until a smaller-than-pivot
+        # valud found
+        while right_idx >= left_idx and sortable[right_idx] >= pivot_val:
+            right_idx -= 1
+
+        # if differences found and the indexes are in the right place, swap them
+        if left_idx < right_idx:
+            swap(sortable, left_idx, right_idx)
+        # unless we've crossed the indexes. then it's time to swap the pivot with the
+        # left index and return
+        else:
+            swap(sortable, left_idx, pivot_idx)
+
+    return left_idx
+
+
+def quicksort_sublist(sortable, start_idx, end_idx):
+    # finished if array has one or less elements
+    if start_idx >= end_idx:
+        return
+
+    new_pivot = qs_partition_array(sortable, start_idx, end_idx)
+
+    # recurse on smaller parts
+    quicksort_sublist(sortable, start_idx, new_pivot - 1)
+    quicksort_sublist(sortable, new_pivot + 1, end_idx)
+
+
+def quicksort(sortable):
+    quicksort_sublist(sortable, 0, len(sortable) - 1)
