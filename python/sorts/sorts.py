@@ -132,3 +132,66 @@ def quicksort_sublist(sortable, start_idx, end_idx):
 
 def quicksort(sortable):
     quicksort_sublist(sortable, 0, len(sortable) - 1)
+
+
+################# counting sort ##################
+
+
+def counting_sort(sortable, highest_num):
+    buckets = [0] * (highest_num + 1)
+    s = []
+
+    for num in sortable:
+        buckets[num] += 1
+
+    for idx, count in enumerate(buckets):
+        if count == 0:
+            continue
+
+        for _ in range(count):
+            s.append(idx)
+
+    return s
+
+
+################# radix sort ##################
+
+
+def bit_value_at(num, bit):
+    mask = 1 << bit
+    if (num & mask) != 0:
+        return 1
+    else:
+        return 0
+
+
+def radix_sort(sortable):
+    sorted_list = sortable
+
+    # assume 64 bit architecture
+    for sig_bit in range(64):
+        # bucket[0] stores the number of items with a 0 in sig bit
+        # bucket[1] stores the number of items with a 1 in sig bit
+        bucket = [0, 0]
+        for number in sorted_list:
+            bit_value = bit_value_at(number, sig_bit)
+            bucket[bit_value] += 1
+
+        # The items with a 0 in sig bit come at the beginning (index 0).
+        # The items with a 1 in sig bit come after all the items with a 0.
+        zero_bit_idx = 0
+        one_bit_idx = bucket[0]
+
+        incrementally_sorted_list = [0] * len(sortable)
+        for number in sorted_list:
+            bit_value = bit_value_at(number, sig_bit)
+            if bit_value == 0:
+                incrementally_sorted_list[zero_bit_idx] = number
+                zero_bit_idx += 1
+            else:
+                incrementally_sorted_list[one_bit_idx] = number
+                one_bit_idx += 1
+
+        sorted_list = incrementally_sorted_list
+
+    return sorted_list
