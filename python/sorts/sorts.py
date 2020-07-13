@@ -195,3 +195,20 @@ def radix_sort(sortable):
         sorted_list = incrementally_sorted_list
 
     return sorted_list
+
+
+################# selection sort ##################
+
+
+def selection_sort(sortable):
+    for i in range(len(sortable)):
+        smallest_idx = i
+
+        for j in range(i + 1, len(sortable)):
+            if sortable[j] < sortable[smallest_idx]:
+                smallest_idx = j
+
+        swap(sortable, i, smallest_idx)
+
+    return sortable
+

@@ -1,8 +1,8 @@
-from sorts.sorts import radix_sort
+from sorts.sorts import selection_sort
 
 
 print(
-    radix_sort(
+    selection_sort(
         [
             1,
             90,
