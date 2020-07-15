@@ -95,22 +95,36 @@ def _solve_cache(bag_size, cakes, current_monetary_value, idx, cache):
     return max(weights)
 
 
+# using overlapping subproblem to solve
 def _solve_optimized(bag_size, cakes):
-    # you have cakes of weights 1 -> infinite
+    # We make a list to hold the maximum possible value at every
+    # duffel bag weight capacity from 0 to weight_capacity
+    # starting each index with value 0
+    max_values_at_capacities = [0] * (bag_size + 1)
 
-    # imagine if you had a bag size of only 1
-    # for something this small, we only care to look at cakes the weight of 1
-    # and we would iterate through all cakes and save the maximum value of a cake that has a weight of 1.
+    for capacity in range(bag_size + 1):
+        # find the highest possible value you can get for each capacity
+        # starting from smallest capacity. larger capacities will use data of
+        # possible largest value from smaller capacities. dynamic programming baby
+        max_value_for_this_capacity = 0
+        for weight, value in cakes:
+            # if we found a cake that weighs 0 and value is more than 0,
+            # we return infinite, because we can grab an _unlimited_ number
+            # of cakes into our bag
+            if weight == 0 and value >= 0:
+                return float("inf")
 
-    # imagine then, you had a bag size of 2
-    # if we pick a cake of weight 2, we would fill up our entire bag.
-    # we just need to check if picking a cake size of 2 would be better money than if we picked
-    # another cake of weight 1.
-    # but we have to account for cakes the weight of 1.
-    # we could pick up a cake weight 1, but we would still have more space in the bag.
-    # the best way to fill up that extra space is to check if adding another cake of weight 1 has a higher price
-    # than the current max price of filling up a cake size 2.
-    None
+            # we don't care about any cakes larger than our current capacity
+            if weight > capacity:
+                continue
 
+            # If the cake weighs as much or less than the current capacity
+            # see what our max value could be if we took it!
+            remaining_bag_size_after_taking_cake = capacity - weight
+            max_value_using_cake = value + max_values_at_capacities[remaining_bag_size_after_taking_cake]
 
-# _solve_optimized(3, [(1, 1), (2, 2), (3, 3)])
+            max_value_for_this_capacity = max(max_value_for_this_capacity, max_value_using_cake)
+
+        max_values_at_capacities[capacity] = max_value_for_this_capacity
+
+    return max_values_at_capacities[bag_size]
