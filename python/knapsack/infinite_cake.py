@@ -1,4 +1,4 @@
-# knapsack problem
+# infinite cake, knapsack problem
 
 # You are a renowned thief who has recently switched from stealing precious metals to stealing cakes because of the insane profit margins. You end up hitting the jackpot, breaking into the world's largest privately owned stock of cakes—the vault of the Queen of England.
 
