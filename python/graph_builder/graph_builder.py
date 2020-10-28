@@ -1,5 +1,13 @@
 from collections import defaultdict
 
+# import by `from graph_builder.graph_builder import AdjacencyList`
+# g = AdjacencyList()
+# g.add_edge(5, 2)
+# g.add_edge(5, 0)
+# g.add_edge(4, 0)
+# g.add_edge(4, 1)
+# g.add_edge(2, 3)
+# g.add_edge(3, 1)
 
 class AdjacencyList:
     def __init__(self):
