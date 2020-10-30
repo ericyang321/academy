@@ -1,6 +1,10 @@
 from collections import defaultdict, deque
 
 
+class DagCycleError(ValueError):
+    pass
+
+
 def kahns_algorithm(adjacency_list):
     in_degree = defaultdict(int)
 
@@ -20,7 +24,7 @@ def kahns_algorithm(adjacency_list):
         if in_degree[node] == 0:
             q.appendleft(node)
 
-    visited_nodes = 0
+    total_visited_nodes = adjacency_list.node_count()
     stack = []
 
     while q:
@@ -28,14 +32,16 @@ def kahns_algorithm(adjacency_list):
         stack.append(node)
 
         for neighbor in adjacency_list[node]:
+            # lowing an indegree of a node is an act of "removing an edge" without actually
+            # modifying the graph
             in_degree[neighbor] -= 1
-            # if in-degree becomes zero (meaning that node has been walked to completely), enqueue it
+            # if in-degree becomes zero, enqueue it
             if in_degree[neighbor] == 0:
                 q.appendleft(neighbor)
 
-        visited_nodes += 1
+        total_visited_nodes -= 1
 
-    if visited_nodes != adjacency_list.node_count():
-        print("There's a cycle in graph")
+    if total_visited_nodes != 0:
+        raise DagCycleError("Cycle detected")
 
     return stack
