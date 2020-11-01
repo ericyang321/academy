@@ -26,7 +26,6 @@ def lazy_shortest_distance(adjacency_list, start_node):
     distances[start_node] = 0
 
     visited = set([])
-    previous_nodes = {}
     pq = MinPriorityQueue([(0, start_node)])
 
     while len(pq) > 0:
@@ -47,13 +46,8 @@ def lazy_shortest_distance(adjacency_list, start_node):
             # if new accumulated distance is shorter than what's already saved, update
             accumulated_distance = distances[node] + weight
             if accumulated_distance < distances[neighbor]:
-                # save a parent relationship for the neighbor. but only save the node with smallest cost.
-                previous_nodes[neighbor] = node
                 distances[neighbor] = accumulated_distance
-
                 # we only append to priority queue if the neighbor is a promising one that gave us a shorter distance.
-                pq.append((accumulated_distance, neighbor)
+                pq.append((accumulated_distance, neighbor))
 
-    # reconstruct the shortest path with `previous_nodes`
-
-
+    return distances

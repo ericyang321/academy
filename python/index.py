@@ -1,4 +1,5 @@
 from dijkstras_algorithm.lazy_shortest_distance import lazy_shortest_distance
+from dijkstras_algorithm.lazy_shortest_path import lazy_shortest_path
 
 
 adjacency_list = {
@@ -11,5 +12,5 @@ adjacency_list = {
 }
 
 print(
-    lazy_shortest_distance(adjacency_list, "U")
+    lazy_shortest_path(adjacency_list, "U", "W")
 )
