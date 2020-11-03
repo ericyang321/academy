@@ -5,7 +5,7 @@ def lazy_shortest_distance(adjacency_list, start_node):
     """
     finds shortest distances traversable from start node to all other nodes
     called lazy because the algorithm lazily deletes outdated (longer path) key
-    value pairs
+    value pairs. it's cheaper to insert into a heap (O(log n)) than it is to delete O(n)
 
     assuming a graph adjacency structure of:
     adjacency_list = {

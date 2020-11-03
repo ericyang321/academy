@@ -1,8 +1,5 @@
 #include <iostream>
-
-void printInt(int x) {
-  std::cout << x;
-}
+#define CONST_NUM 1
 
 int main() {
   // variable making
