@@ -1,4 +1,7 @@
 #include <iostream>
+
+#include "utils.h"
+
 #define CONST_NUM 1
 
 int main() {
