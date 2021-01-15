@@ -90,48 +90,44 @@ def heap_sort(sortable, comparator=num_comparator):
 ################# quick sort ##################
 
 
-def qs_partition_array(sortable, start_idx, end_idx):
-    pivot_idx = end_idx
-    pivot_val = sortable[pivot_idx]
-    left_idx = start_idx
-    right_idx = end_idx
+def partition(arr, left, right):
+    pivot = arr[left]
+    low = left + 1
+    high = right
 
-    while left_idx <= right_idx:
-        # walk left idx pointer to the right until a larger-than-pivot
-        # value found
-        while left_idx <= right_idx and sortable[left_idx] <= pivot_val:
-            left_idx += 1
+    while True:
+        # Move the high pointer first
+        # If the current value we're looking at is larger than the pivot
+        # it's in the right place (right side of pivot) and we can move left,
+        # to the next element.
+        # We also need to make sure we haven't surpassed the low pointer, since that
+        # indicates we have already moved all the elements to their correct side of the pivot
+        while low <= high and arr[high] >= pivot:
+            high -= 1
 
-        # walk right idx pointer to the left until a smaller-than-pivot
-        # valud found
-        while right_idx >= left_idx and sortable[right_idx] >= pivot_val:
-            right_idx -= 1
+        # Move the low pointer second. Opposite process as one above
+        while low <= high and arr[low] <= pivot:
+            low += 1
 
-        # if differences found and the indexes are in the right place, swap them
-        if left_idx < right_idx:
-            swap(sortable, left_idx, right_idx)
-        # unless we've crossed the indexes. then it's time to swap the pivot with the
-        # left index and return
+        # we found a value for both high and low that is out of order and we do the swap
+        if low <= high:
+            arr[low], arr[high] = arr[high], arr[low]
+        # or low is higher than high, in which case we exit the loop
         else:
-            swap(sortable, left_idx, pivot_idx)
+            break
 
-    return left_idx
+    # once the low and high pointers cross, we swap the pivot with the high
+    arr[left], arr[high] = arr[high], arr[left]
 
+    return high
 
-def quicksort_sublist(sortable, start_idx, end_idx):
-    # finished if array has one or less elements
-    if start_idx >= end_idx:
+def quicksort(arr, left, right):
+    if left >= right:
         return
 
-    new_pivot = qs_partition_array(sortable, start_idx, end_idx)
-
-    # recurse on smaller parts
-    quicksort_sublist(sortable, start_idx, new_pivot - 1)
-    quicksort_sublist(sortable, new_pivot + 1, end_idx)
-
-
-def quicksort(sortable):
-    quicksort_sublist(sortable, 0, len(sortable) - 1)
+    partitioned_idx = partition(arr, left, right)
+    quicksort(arr, left, partitioned_idx - 1)
+    quicksort(arr, partitioned_idx + 1, right)
 
 
 ################# counting sort ##################
