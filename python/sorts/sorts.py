@@ -121,6 +121,7 @@ def partition(arr, left, right):
 
     return high
 
+
 def quicksort(arr, left, right):
     if left >= right:
         return
@@ -207,4 +208,3 @@ def selection_sort(sortable):
         swap(sortable, i, smallest_idx)
 
     return sortable
-
