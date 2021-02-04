@@ -1,10 +1,6 @@
-from collections import deque
-
-
 def max_subarray(nums, k):
-    """
-    find max possible summed subarray value of k elements. k is 1 indexed
-    """
+    # fixed sliding window problem
+    # find max possible summed subarray value of k elements. k is 1 indexed
     max_num = float("-inf")
     current_num = 0
     for idx, num in enumerate(nums):
