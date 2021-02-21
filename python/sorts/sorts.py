@@ -2,21 +2,7 @@ from .comparators import num_comparator
 import heapq
 
 
-def swap(l, i, j):
-    temp = l[i]
-    l[i] = l[j]
-    l[j] = temp
-
-
 def bubble_sort(l):
-    pass
-
-
-def selection_sort(l):
-    pass
-
-
-def insertion_sort(l):
     pass
 
 
@@ -205,6 +191,6 @@ def selection_sort(sortable):
             if sortable[j] < sortable[smallest_idx]:
                 smallest_idx = j
 
-        swap(sortable, i, smallest_idx)
+        sortable[i], sortable[smallest_idx] = sortable[smallest_idx], sortable[i]
 
     return sortable

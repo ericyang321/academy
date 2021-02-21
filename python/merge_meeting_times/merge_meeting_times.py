@@ -43,11 +43,7 @@ def merge_meeting_times(meeting_times):
     8. return array
     """
 
-    def first(tup):
-        return tup[0]
-
-
-    merged_times = sorted(meeting_times, key=first)
+    merged_times = sorted(meeting_times, key=lambda tup: tup[0])
     predator_idx = 0
     prey_idx = 1
 
@@ -64,14 +60,7 @@ def merge_meeting_times(meeting_times):
             predator_idx = prey_idx
             prey_idx += 1
 
-
     return merged_times
-
-    """
-    obviously the runtime of this is trash
-    a sort is (n * log n) +
-    an element delete is (n * (n - 1) / 2)
-    """
 
 
 def is_overlapping(predator, prey):
