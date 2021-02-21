@@ -1,4 +1,3 @@
-from ..min_priority_queue.min_priority_queue import MinPriorityQueue
 from collections import deque
 
 

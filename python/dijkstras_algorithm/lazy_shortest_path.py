@@ -1,4 +1,4 @@
-from .min_priority_queue import MinPriorityQueue
+from heaps.min_priority_queue import MinPriorityQueue
 
 
 def lazy_shortest_path(adjacency_list, start_node, end_node):
@@ -9,7 +9,8 @@ def lazy_shortest_path(adjacency_list, start_node, end_node):
 
     to find MORE than just the distance and find the exact PATH, you need to keep track of
     the PREVIOUS node we took to get to a CURRENT node.
-    the way to do this is maintain another `previous_node` hash data structure.
+
+    maintain another `previous_node` hash data structure.
     {current_node: previous_node}, initially filled with 1.
 
     assuming a graph adjacency structure of:
@@ -22,16 +23,18 @@ def lazy_shortest_path(adjacency_list, start_node, end_node):
         "Z": {"W": 5, "Y": 1},
     }
     """
+    INF = float("inf")
+
     distances = {}
     previous_nodes = {}
 
     # initialize every node as "unreachable"
     for node in adjacency_list.keys():
-        distances[node] = float("infinity")
+        distances[node] = INF
 
     distances[start_node] = 0
 
-    visited = set([])
+    visited = set()
     pq = MinPriorityQueue([(0, start_node)])
 
     while len(pq) > 0:
@@ -61,7 +64,7 @@ def lazy_shortest_path(adjacency_list, start_node, end_node):
 
     # reconstruct the shortest path with `previous_nodes`
     path = []
-    if end_node not in distances or distances[end_node] == float("infinity"):
+    if end_node not in distances or distances[end_node] == INF:
         return path
 
     at = end_node

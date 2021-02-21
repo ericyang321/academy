@@ -1,5 +1,4 @@
-from .min_priority_queue import MinPriorityQueue
-
+from heaps.min_priority_queue import MinPriorityQueue
 
 def lazy_shortest_distance(adjacency_list, start_node):
     """
@@ -21,11 +20,11 @@ def lazy_shortest_distance(adjacency_list, start_node):
 
     # initialize every node as "unreachable"
     for node in adjacency_list.keys():
-        distances[node] = float("infinity")
+        distances[node] = float("inf")
 
     distances[start_node] = 0
 
-    visited = set([])
+    visited = set()
     pq = MinPriorityQueue([(0, start_node)])
 
     while len(pq) > 0:

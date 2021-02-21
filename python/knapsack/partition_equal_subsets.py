@@ -3,8 +3,7 @@
 def brute_force(nums, idx, left_part, right_part, cache):
     """
     brute force: instead of thinking about it as two arrays you have to fill (because you don't need to actually list out the exact array arrangement),
-    think of it as two numbers you increment and decrement. you want to visit each number and decide if you want to choose the number and increment / decrement,
-    or you move on.
+    think of it as two numbers you increment and decrement. you want to visit each number and decide if you want to choose the number and increment / decrement, or you move on.
 
     it's 2^n run time
     """

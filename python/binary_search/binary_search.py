@@ -3,7 +3,7 @@ def binary_search(nums, target):
     ceil_idx = len(nums) - 1
 
     while floor_idx <= ceil_idx:
-        diff = int((ceil_idx - floor_idx) / 2)
+        diff = (ceil_idx - floor_idx) // 2
         half_distance_val = nums[floor_idx + diff]
 
         if half_distance_val == target:

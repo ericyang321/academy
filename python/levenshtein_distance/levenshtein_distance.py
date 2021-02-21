@@ -15,15 +15,16 @@ def levenshtein(string1, string2):
                 matrix[i][j] = i
             else:
                 points_from_actions = [
-                    matrix[i - 1][j] + 1,
-                    matrix[i][j - 1] + 1,
-                    matrix[i - 1][j - 1]
+                    matrix[i - 1][j] + 1, # insert a new char
+                    matrix[i][j - 1] + 1, # delete char
+                    matrix[i - 1][j - 1] # replace char
                 ]
 
+                # if two characters are the same, we just use / carry the cost from the last character
+                # because nothing in THIS character needs to change
                 if string1[i - 1] != string2[j - 1]:
                     points_from_actions[2] += 1
 
-                print(points_from_actions)
                 matrix[i][j] = min(points_from_actions)
 
     return matrix[-1][-1]
