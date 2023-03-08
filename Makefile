@@ -1,23 +1,8 @@
-pyinstall:
-	pip install -r python/requirements.txt
+install:
+	pip3 install -r python/requirements.txt
 
-pytest:
-	python -m pytest
+run:
+	python3 python/index.py
 
-pyrun:
-	python python/index.py
-
-pyconsole:
-	python -i python/index.py
-
-cbuild:
-	clang -Wall ./c/index.c -o ./bin/indexc -lm
-
-crun:
-	make cbuild && ./bin/indexc
-
-cppbuild:
-	g++ ./cpp/index.cpp -o ./bin/indexcpp -lm -std=c++17
-
-cpprun:
-	make cppbuild && ./bin/indexcpp
+console:
+	python3 -i python/index.py
